@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -77,14 +77,14 @@ import { CommonModule } from '@angular/common';
           <div class="about-text">
 
             <div class="section-label reveal">
-              About Me
+              {{ isArabic ? 'عني' : 'About Me' }}
             </div>
 
             <h2 class="section-title reveal reveal-delay-1">
-              Crafting digital experiences
+              {{ isArabic ? 'أبني تجارب رقمية' : 'Crafting digital experiences' }}
               <br>
               <span class="gradient-text">
-                with purpose
+                {{ isArabic ? 'بهدف وإتقان' : 'with purpose' }}
               </span>
             </h2>
 
@@ -447,6 +447,8 @@ import { CommonModule } from '@angular/common';
 })
 
 export class AboutComponent {
+  @Input() isArabic = false;
+
 
 details = [
   {

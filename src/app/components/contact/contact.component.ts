@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -11,14 +11,13 @@ import { FormsModule } from '@angular/forms';
       <div class="container">
         <div class="contact-grid">
           <div class="contact-info">
-            <div class="section-label reveal">Contact</div>
+            <div class="section-label reveal">{{ isArabic ? 'تواصل معي' : 'Contact' }}</div>
             <h2 class="section-title reveal reveal-delay-1">
-              Let's build something<br>
-              <span class="gradient-text">great together</span>
+              {{ isArabic ? 'لنبني شيئاً' : "Let's build something" }}<br>
+              <span class="gradient-text">{{ isArabic ? 'رائعاً معاً' : 'great together' }}</span>
             </h2>
             <p class="contact-desc reveal reveal-delay-2">
-              Have a project in mind or want to collaborate? My inbox is always open.
-              I'll get back to you within 24 hours!
+              {{ isArabic ? 'لديك مشروع في ذهنك أو تريد التعاون؟ صندوق بريدي مفتوح دائماً. سأرد عليك خلال 24 ساعة!' : "Have a project in mind or want to collaborate? My inbox is always open. I'll get back to you within 24 hours!" }}
             </p>
             <div class="contact-details reveal reveal-delay-3">
               <a class="contact-detail" *ngFor="let c of contactInfo" [href]="c.href" target="_blank">
@@ -139,6 +138,8 @@ import { FormsModule } from '@angular/forms';
   `]
 })
 export class ContactComponent {
+  @Input() isArabic = false;
+
   form = { name: '', email: '', subject: '', message: '' };
   sending = false;
   sent = false;

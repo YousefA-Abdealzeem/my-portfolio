@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,10 +11,10 @@ import { CommonModule } from '@angular/common';
         <div class="hero-content">
           <div class="hero-label reveal">
             <span class="label-dot"></span>
-            <span>Available for work</span>
+            <span>{{ isArabic ? 'متاح للعمل' : 'Available for work' }}</span>
           </div>
           <h1 class="hero-title reveal reveal-delay-1">
-            <span class="line greeting">Hi, I'm</span>
+            <span class="line greeting">{{ isArabic ? 'مرحباً، أنا' : "Hi, I'm" }}</span>
             <span class="line name-line">
               <span class="gradient-text">Yousef Alian</span>
               <span class="cursor-blink">_</span>
@@ -25,16 +25,18 @@ import { CommonModule } from '@angular/common';
             </span>
           </h1>
           <p class="hero-desc reveal reveal-delay-2">
-            I build <strong>exceptional digital experiences</strong> — from pixel-perfect UI to
-            scalable Angular applications. Turning ideas into reality, one component at a time.
+            {{ isArabic
+              ? 'أبني تجارب رقمية استثنائية — من واجهات مستخدم دقيقة الإتقان إلى تطبيقات Angular قابلة للتوسع. أحوّل الأفكار إلى واقع، مكوّناً تلو الآخر.'
+              : 'I build exceptional digital experiences — from pixel-perfect UI to scalable Angular applications. Turning ideas into reality, one component at a time.'
+            }}
           </p>
           <div class="hero-actions reveal reveal-delay-3">
             <a href="#projects" class="btn-primary">
-              View My Work
+              {{ isArabic ? 'أعمالي' : 'View My Work' }}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
             <a href="https://drive.google.com/file/d/1QHv8Qh3U03gVOn2YCG5buFORweZMb1vM/view?usp=drive_link" target="_blank" class="btn-outline">
-              Download CV
+              {{ isArabic ? 'تحميل السيرة الذاتية' : 'Download CV' }}
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
             </a>
           </div>
@@ -222,6 +224,7 @@ import { CommonModule } from '@angular/common';
   `]
 })
 export class HeroComponent implements OnInit, OnDestroy {
+  @Input() isArabic = false;
   displayedText = '';
   isTyping = false;
   private roles = ['Frontend Developer', 'Angular Specialist', 'UI/UX Craftsman', 'Web Architect'];

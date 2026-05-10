@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,13 +10,13 @@ import { CommonModule } from '@angular/common';
       <div class="container">
 
         <div class="section-header reveal">
-          <div class="section-label">Skills</div>
+          <div class="section-label">{{ isArabic ? 'مهاراتي' : 'Skills' }}</div>
           <h2 class="section-title">
-            Technologies I<br>
-            <span class="gradient-text">work with</span>
+            {{ isArabic ? 'التقنيات التي' : 'Technologies I' }}<br>
+            <span class="gradient-text">{{ isArabic ? 'أعمل بها' : 'work with' }}</span>
           </h2>
           <p class="section-sub">
-            Tools and technologies I use to build modern web applications
+            {{ isArabic ? 'الأدوات والتقنيات التي أستخدمها لبناء تطبيقات ويب حديثة' : 'Tools and technologies I use to build modern web applications' }}
           </p>
         </div>
 
@@ -247,6 +247,8 @@ import { CommonModule } from '@angular/common';
   `]
 })
 export class SkillsComponent {
+  @Input() isArabic = false;
+
 
   activeCategory = 'All';
 

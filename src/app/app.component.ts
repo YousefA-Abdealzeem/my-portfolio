@@ -19,13 +19,34 @@ import { ContactComponent } from './components/contact/contact.component';
     <div class="cursor" [style.left.px]="cursorX" [style.top.px]="cursorY" [class.hovering]="isHovering"></div>
     <div class="cursor-follower" [style.left.px]="followerX" [style.top.px]="followerY" [class.hovering]="isHovering"></div>
 
-    <app-navbar></app-navbar>
+    <!-- Floating Controls -->
+    <div class="floating-controls">
+      <!-- Theme Toggle -->
+      <button class="ctrl-btn" (click)="toggleTheme()" [title]="isDark ? 'Switch to Light' : 'Switch to Dark'" aria-label="Toggle theme">
+        <svg *ngIf="isDark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg *ngIf="!isDark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <!-- Language Toggle -->
+      <button class="ctrl-btn lang-btn" (click)="toggleLang()" [title]="isArabic ? 'Switch to English' : 'التبديل للعربية'" aria-label="Toggle language">
+        <span class="lang-label">{{ isArabic ? 'EN' : 'ع' }}</span>
+      </button>
+    </div>
+
+    <app-navbar [isArabic]="isArabic"></app-navbar>
     <main>
-      <app-hero></app-hero>
-      <app-about></app-about>
-      <app-skills></app-skills>
-      <app-projects></app-projects>
-      <app-contact></app-contact>
+      <app-hero [isArabic]="isArabic"></app-hero>
+      <app-about [isArabic]="isArabic"></app-about>
+      <app-skills [isArabic]="isArabic"></app-skills>
+      <app-projects [isArabic]="isArabic"></app-projects>
+      <app-contact [isArabic]="isArabic"></app-contact>
     </main>
 
     <footer class="footer">
@@ -34,7 +55,10 @@ import { ContactComponent } from './components/contact/contact.component';
           <a href="#hero" class="footer-logo">
             <span class="logo-b">&lt;</span>YA<span class="logo-b">/&gt;</span>
           </a>
-          <p class="footer-copy">Designed & Built by <span class="gradient-text">Yousef Alian Abdelazeem</span></p>
+          <p class="footer-copy">
+            {{ isArabic ? 'تصميم وتطوير' : 'Designed & Built by' }}
+            <span class="gradient-text">Yousef Alian Abdelazeem</span>
+          </p>
           <div class="footer-socials">
             <a href="https://github.com/YousefA-Abdealzeem" target="_blank" title="GitHub">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
@@ -59,12 +83,59 @@ import { ContactComponent } from './components/contact/contact.component';
     .footer-copy { color: var(--text-muted); font-size: 13px; }
     .footer-socials { display: flex; gap: 12px; }
     .footer-socials a { color: var(--text-dim); transition: color 0.2s, transform 0.2s; display: flex; &:hover { color: var(--accent); transform: translateY(-2px); } }
+
+    /* Floating controls */
+    .floating-controls {
+      position: fixed;
+      right: 24px;
+      bottom: 40px;
+      z-index: 800;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ctrl-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      cursor: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.3s, color 0.3s, transform 0.3s var(--ease-out-expo), box-shadow 0.3s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+
+      &:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        transform: scale(1.1);
+        box-shadow: 0 6px 28px rgba(108,99,255,0.3);
+      }
+    }
+
+    .lang-btn .lang-label {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .floating-controls { right: 16px; bottom: 24px; }
+      .ctrl-btn { cursor: auto; }
+    }
   `]
 })
 export class AppComponent implements OnInit {
   cursorX = 0; cursorY = 0;
   followerX = 0; followerY = 0;
   isHovering = false;
+  isDark = true;
+  isArabic = false;
 
   @HostListener('mousemove', ['$event'])
   onMouseMove(e: MouseEvent) {
@@ -73,7 +144,22 @@ export class AppComponent implements OnInit {
     setTimeout(() => { this.followerX = e.clientX; this.followerY = e.clientY; }, 80);
   }
 
+  toggleTheme() {
+    this.isDark = !this.isDark;
+    document.documentElement.setAttribute('data-theme', this.isDark ? 'dark' : 'light');
+  }
+
+  toggleLang() {
+    this.isArabic = !this.isArabic;
+    document.documentElement.setAttribute('dir', this.isArabic ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute('lang', this.isArabic ? 'ar' : 'en');
+  }
+
   ngOnInit() {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', 'en');
+
     document.addEventListener('mouseover', (e) => {
       const target = e.target as HTMLElement;
       this.isHovering = ['A','BUTTON'].includes(target.tagName) || !!target.closest('a, button, [data-hover]');

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,9 +9,9 @@ import { CommonModule } from '@angular/common';
     <section id="projects">
       <div class="container">
         <div class="section-header reveal">
-          <div class="section-label">Projects</div>
-          <h2 class="section-title">Things I've <span class="gradient-text">built</span></h2>
-          <p class="section-sub">Real projects — from Angular apps to landing pages</p>
+          <div class="section-label">{{ isArabic ? 'مشاريعي' : 'Projects' }}</div>
+          <h2 class="section-title">{{ isArabic ? 'ما قمت' : "Things I've" }} <span class="gradient-text">{{ isArabic ? 'ببنائه' : 'built' }}</span></h2>
+          <p class="section-sub">{{ isArabic ? 'مشاريع حقيقية — من تطبيقات Angular إلى صفحات هبوط' : 'Real projects — from Angular apps to landing pages' }}</p>
         </div>
 
         <!-- Featured (first 2) -->
@@ -146,6 +146,8 @@ import { CommonModule } from '@angular/common';
   `]
 })
 export class ProjectsComponent {
+  @Input() isArabic = false;
+
   featuredProjects = [
     {
       title: 'HerPower — Women Sports Platform',

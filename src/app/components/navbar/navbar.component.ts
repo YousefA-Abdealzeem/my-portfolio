@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -15,11 +15,11 @@ import { CommonModule } from '@angular/common';
           <li *ngFor="let item of navItems; let i = index">
             <a [href]="item.href" class="nav-link">
               <span class="nav-num">0{{i+1}}.</span>
-              {{ item.label }}
+              {{ isArabic ? item.labelAr : item.label }}
             </a>
           </li>
         </ul>
-        <a href="#contact" class="btn-outline nav-cta">Hire Me</a>
+        <a href="#contact" class="btn-outline nav-cta">{{ isArabic ? 'وظّفني' : 'Hire Me' }}</a>
         <button class="menu-toggle" (click)="toggleMenu()" [class.open]="menuOpen">
           <span></span><span></span><span></span>
         </button>
@@ -28,10 +28,10 @@ import { CommonModule } from '@angular/common';
         <ul>
           <li *ngFor="let item of navItems; let i = index">
             <a [href]="item.href" (click)="closeMenu()" class="mobile-link">
-              <span class="nav-num">0{{i+1}}.</span> {{ item.label }}
+              <span class="nav-num">0{{i+1}}.</span> {{ isArabic ? item.labelAr : item.label }}
             </a>
           </li>
-          <li><a href="#contact" (click)="closeMenu()" class="btn-primary" style="width:100%;justify-content:center;margin-top:16px">Hire Me</a></li>
+          <li><a href="#contact" (click)="closeMenu()" class="btn-primary" style="width:100%;justify-content:center;margin-top:16px">{{ isArabic ? 'وظّفني' : 'Hire Me' }}</a></li>
         </ul>
       </div>
     </nav>
@@ -48,7 +48,7 @@ import { CommonModule } from '@angular/common';
     }
     nav.scrolled {
       padding: 16px 40px;
-      background: rgba(5, 5, 8, 0.85);
+      background: var(--nav-bg);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
     }
@@ -123,8 +123,7 @@ import { CommonModule } from '@angular/common';
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(5,5,8,0.97);
-      backdrop-filter: blur(20px);
+      background: var(--mobile-nav-solid);
       z-index: 899;
       padding: 100px 40px 40px;
       transform: translateX(100%);
@@ -149,22 +148,24 @@ import { CommonModule } from '@angular/common';
       .nav-links, .nav-cta { display: none; }
       .menu-toggle { display: flex; }
       .mobile-menu { display: block; }
-      nav { padding: 20px 24px; }
-      nav.scrolled { padding: 16px 24px; }
+      nav { padding: 20px 24px; background: var(--mobile-nav-solid); }
+      nav.scrolled { padding: 16px 24px; background: var(--mobile-nav-solid); backdrop-filter: none; }
     }
   `]
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnChanges {
+  @Input() isArabic = false;
+
   isScrolled = false;
   isHidden = false;
   menuOpen = false;
   private lastScroll = 0;
 
   navItems = [
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Contact', href: '#contact' }
+    { label: 'About',    labelAr: 'عني',       href: '#about' },
+    { label: 'Skills',   labelAr: 'مهاراتي',   href: '#skills' },
+    { label: 'Projects', labelAr: 'مشاريعي',   href: '#projects' },
+    { label: 'Contact',  labelAr: 'تواصل',     href: '#contact' }
   ];
 
   @HostListener('window:scroll')
@@ -175,7 +176,7 @@ export class NavbarComponent implements OnInit {
     this.lastScroll = current;
   }
 
-  ngOnInit() {}
+  ngOnChanges() {}
   toggleMenu() { this.menuOpen = !this.menuOpen; }
   closeMenu() { this.menuOpen = false; }
 }
