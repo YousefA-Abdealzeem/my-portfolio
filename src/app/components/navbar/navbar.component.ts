@@ -146,10 +146,22 @@ import { CommonModule } from '@angular/common';
     }
     @media (max-width: 900px) {
       .nav-links, .nav-cta { display: none; }
-      .menu-toggle { display: flex; }
+      .menu-toggle { display: flex; cursor: auto; }
       .mobile-menu { display: block; }
-      nav { padding: 20px 24px; background: var(--mobile-nav-solid); }
-      nav.scrolled { padding: 16px 24px; background: var(--mobile-nav-solid); backdrop-filter: none; }
+      nav {
+        padding: 20px 24px;
+        background: var(--mobile-nav-solid) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        opacity: 1 !important;
+      }
+      nav.scrolled {
+        padding: 16px 24px;
+        background: var(--mobile-nav-solid) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        border-bottom: 1px solid var(--border);
+      }
     }
   `]
 })

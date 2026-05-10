@@ -38,7 +38,7 @@ import { CommonModule } from '@angular/common';
         <!-- Skills -->
         <div class="skills-grid">
           <div
-            class="skill-card reveal"
+            class="skill-card"
             *ngFor="let skill of filteredSkills; let i = index"
             [style.transition-delay]="(i * 0.05) + 's'"
           >
@@ -150,6 +150,12 @@ import { CommonModule } from '@angular/common';
       border-radius: 14px;
       padding: 22px;
       transition: 0.3s;
+      animation: fadeInUp 0.4s ease both;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .skill-card:hover {
